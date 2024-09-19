@@ -2,35 +2,44 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import Header from "./components/Header";
 import Body from "./components/Body";
-const Header = () => {
-  return (
-    <div className="header">
-      <div className="Logo-Container">
-        <img
-          className="Logo"
-          src="https://www.logodesign.net/logo/smoking-burger-with-lettuce-3624ld.png"
-        />
-      </div>
-      <div className="Nav-bar">
-        <ul>
-          <li>HOME</li>
-          <li>ABOUT US</li>
-          <li>CONTACT</li>
-          <li>CART</li>
-        </ul>
-      </div>
-    </div>
-  );
-};
+import About from "./components/About";
+import Contact from"./components/Contact";
+import Error from"./components/Error";
+import { createBrowserRouter, RouterProvider,Outlet } from "react-router-dom";
 
 const AppLayout = () => {
   return (
     <div className="app">
       <Header />
-      <Body />
+      <Outlet />
+      
     </div>
   );
 };
 
+const appRouter = createBrowserRouter([
+  {
+    path: "/",
+    element: <AppLayout />,
+    children:[
+      {
+        path:"/",
+        element:<Body />,
+      },
+      {
+        path: "/about",
+        element: <About />,
+      },
+      {
+        path: "/contact",
+        element: <Contact />,
+      },
+    ],
+    
+    errorElement: <Error />,
+  },
+ 
+]);
+
 const root = ReactDOM.createRoot(document.getElementById("root"));
-root.render(<AppLayout />);
+root.render(<RouterProvider router={appRouter} />);

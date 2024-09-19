@@ -2,9 +2,12 @@ import RestaurantCard from "./RestaurantCard";
 import { useState, useEffect } from "react";
 import Shimmer from "../../Shimmer";
 const Body = () => {
+  //Local state variable -Super powerful variable
   const [listOfRestaurants, setListOfRestaurants] = useState([]);
-  const [filteredRestaurant,setFilteredRestraunt]=useState([]);
+  const [filteredRestaurant, setFilteredRestraunt] = useState([]);
   const [searchText, setSearchText] = useState("");
+
+  //Whenever state variable update ,react triggers a reconciliation cycle(re-renders the components)
   console.log("Body Rendered");
   useEffect(() => {
     fetchData();
@@ -16,8 +19,12 @@ const Body = () => {
     const json = await data.json();
 
     // console.log(json?.data?.cards[1]?.card?.card?.gridElements?.infoWithStyle?.restaurants);
-    setListOfRestaurants(json?.data?.cards[1]?.card?.card?.gridElements?.infoWithStyle?.restaurants);
-  setFilteredRestraunt(json?.data?.cards[1]?.card?.card?.gridElements?.infoWithStyle?.restaurants);
+    setListOfRestaurants(
+      json?.data?.cards[1]?.card?.card?.gridElements?.infoWithStyle?.restaurants
+    );
+    setFilteredRestraunt(
+      json?.data?.cards[1]?.card?.card?.gridElements?.infoWithStyle?.restaurants
+    );
   };
 
   return listOfRestaurants.length === 0 ? (
@@ -37,8 +44,9 @@ const Body = () => {
           <button
             onClick={() => {
               console.log(searchText);
-              const filteredRestaurant = listOfRestaurants.filter((res) =>
-                res.info.name.toLowerCase().includes(searchText.toLowerCase())
+              const filteredRestaurant = listOfRestaurants.filter(
+                (res) =>
+                  res.info.name.toLowerCase().includes(searchText.toLowerCase())
                 // console.log(res.info.name)
               );
 
@@ -55,7 +63,7 @@ const Body = () => {
               (res) => res.info.avgRating > 4
             );
             //filter logic here
-             setListOfRestaurants(filteredList);
+            setListOfRestaurants(filteredList);
 
             console.log(listOfRestaurants);
           }}
